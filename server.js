@@ -1,10 +1,12 @@
+const bodyParser = require('body-parser');
 var express = require("express"),
-    app = express();
+  app = express();
 
 var port = process.env.PORT || 8080;
 
-var nodemailer = require('nodemailer');
+app.use(bodyParser.json());
 
+var nodemailer = require('nodemailer');
 
 var transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -14,29 +16,43 @@ var transporter = nodemailer.createTransport({
   }
 });
 
-const sendMatchMail = (message) => {
 var mailOptions = {
-from: 'SIT725.heartbreakers@gmail.com',
-to: 'SIT725.heartbreakers@gmail.com',
-subject: 'Sending Email using Node.js',
-text: message
+  from: 'SIT725.heartbreakers@gmail.com',
+  to: 'SIT725.heartbreakers@gmail.com',
+  subject: 'You have a new match!',
+  text: ''
 };
 
-transporter.sendMail(mailOptions, function(error, info){
-if (error) {
-  console.log(error);
-} else {
-  console.log('Email sent: ' + info.response);
-}
-}); 
-}
 
 app.use(express.static(__dirname + '/public'));
 
+//GET RID OF THIS LATER
 app.get("/test", function (request, response) {
   var user_name = request.query.user_name;
   response.end("Hello " + user_name + "!");
 });
+
+app.get("/post", function (request, response) {
+  var user_name = request.query.user_name;
+  response.end("Hello " + user_name + "!");
+});
+
+app.post('/sendMessage', (req, res) => {
+  console.log(req.body);
+ message = String(req.body.message);
+ sendHeartbreakerMail(message, res)
+})
+
+const sendHeartbreakerMail = (message) => {
+  mailOptions.text = message;
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+}
 
 app.listen(port);
 console.log("Listening on port ", port);

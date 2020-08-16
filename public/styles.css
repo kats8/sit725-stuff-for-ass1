@@ -41,15 +41,18 @@ main {
   background-color: #c5cadf;
 }
 
-/*
-wll need
-$(function () {
-     $('#<divID>').removeClass('hidden');
- });
- to unhide
+.modal {
+  display: none; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  height: 100%; 
+  overflow: auto; 
+}
 
- to hide:
- $( "p" ).addClass( "myClass yourClass" );
 
- $( "p" ).removeClass( "myClass noClass" ).addClass( "yourClass" );
- */
+img {
+  max-width: 250px;
+  height: auto;
+}
+

@@ -65,7 +65,7 @@
                 <div class=" row ">
                     <form class=" row">
                 <div class="input-field col s12 m9 l10">
-                    <input value="" id="name" type="text" class="validate">
+                    <input required value="" id="name" type="text" class="validate" >
                     <label class="active" for="name">First Name</label>
                 </div>
                 <div class="row">
@@ -76,12 +76,21 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s12 m9 l10">
-                        <input value="" id="bio" type="text" class="validate">
+                        <input value="" id="email" type="email" class="validate">
+                        <label class="active" for="email">Email</label>
+                        <span class="helper-text" data-error="Please enter a valid email address"
+                            data-success="Great!">Your email for receiving messages</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12 m9 l10">
+                        <textarea value="" id="bio" class="materialize-textarea"></textarea>
                         <label class="active" for="bio">Bio</label>
                         <span class="helper-text">In a few words, tell us about your passions, interests,
                             hobbies.</span>
                     </div>
                 </div>
+                <!--
                 <div class="row">
                     <div class="input-field col s12 m9 l10">
                         <input value="" id="pic" type="url" class="validate">
@@ -89,23 +98,14 @@
                         <span class="helper-text" data-error="Please enter a valid URL" data-success="Great!">URL
                             containing your picture</span>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12 m9 l10">
-                        <input value="" id="email" type="email" class="validate">
-                        <label class="active" for="email">Email</label>
-                        <span class="helper-text" data-error="Please enter a valid email address"
-                            data-success="Great!">Your email for receiving messages</span>
-                    </div>
-                </div>
+                </div> -->
+                
                 </form>
             </div>
 
             <div class="modal-footer">
                 <a href="#!" class="modal-close waves-effect waves-green btn-flat" id="profileButton">Start Matching
                     <i class="material-icons right">send</i></a>
-                <button id="profileButton1" class="btn-large waves-effect waves-light" type="submit">Start Matching
-                    <i class="material-icons right">send</i>
                 </button>
             </div>
         </div>
@@ -118,14 +118,14 @@
                         provided</em>
                 </p>
             </div>
-            <div class="col s12 m8 l3 center card" id="card" >
+            <div class="col s12 m8 l3 center card" id="card">
                 <div class="center">
                     <h4 id="nameAge">The name, age</h4>
                     <div class="row valign-wrapper">
                         <img src="assets/prof.jpeg" id="profPic" alt="" draggable="false" class="center responsive-img">
                     </div>
                     <div class="row center">
-                        <p id="bio">The bio</p>
+                        <p id="profBio">The bio</p>
                     </div>
                 </div>
                 <div class="row center">
@@ -140,7 +140,28 @@
 
 
         </div>
+        <div id="matchAlert" class="modal wide">
+            <div class="modal-content center card">
 
+                    <p><em>You have a match</em><br>You shall receive an email notifcation shortly</p>
+                    <div class="row">
+
+                    <div class="col s6 m4 l3  left">
+                        <h4 class="userNameAge">Your name, age</h4>
+                        <img src="assets/UserPic.jpeg" class="userProfPic" alt="">
+                        <p class="userBio"> bio</p>
+                    </div>
+                    <div class="col s6 m4 l3  right">
+                        <h4 id="matchNameAge">The name, age</h4>
+                        <img src="assets/prof.jpeg" id="matchPic" alt="">
+                        <p id="matchBio"> bio</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Keep looking for love
+                    <i class="material-icons col 12 center">send</i></a>
+            </div>
     </main>
     <footer class="page-footer">
         <div class="footer-copyright">
@@ -157,6 +178,7 @@
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 

@@ -1,19 +1,19 @@
-//TO DO
-//Do I need user AND user profile?
+
+
 //DO I ADD userprofile to profiles and then skip if it's me??
 //remove all the stuff that's not mine
 
 
 //the current user, initialised to null
-let username = null;
 //index to keep track of profile in a stack
 let profileIndex = 0;
 let matchList = [];
+//current user, initialised to no information and locally stored photograph
 let userProfile = {
     profName: '',
     age: null,
     bio: '',
-    pic: '',
+    pic: 'assets/UserPic.jpg',
     email: ''
 }
 
@@ -25,7 +25,7 @@ let profileStack = [
         profName: 'Izabelle',
         age: 25,
         bio: 'Likes pina colada and walks in the rain',
-        pic: 'assets/prof.jpeg',
+        pic: 'assets/Izabelle.jpg',
         email: 'Izi@hotmail.com'
     },
 
@@ -33,7 +33,7 @@ let profileStack = [
         profName: 'Joshua',
         age: 32,
         bio: 'My passions include motorcycles and woodturning',
-        pic: 'assets/flame.png',
+        pic: 'assets/Joshua.jpg',
         email: 'JoshRides@gmail.com'
     },
 
@@ -41,7 +41,7 @@ let profileStack = [
         profName: 'Mary',
         age: 27,
         bio: 'Architect and dog lover',
-        pic: 'assets/prof.jpeg',
+        pic: 'assets/Mary.jpg',
         email: 'MaryD@gmail.com'
     },
 
@@ -49,7 +49,7 @@ let profileStack = [
         profName: 'Adam',
         age: 19,
         bio: 'Thrill seeker and bass guitarist',
-        pic: 'assets/flame.png',
+        pic: 'assets/Adam.jpg',
         email: 'AdamPlays@yahoo.com'
     },
 
@@ -57,37 +57,65 @@ let profileStack = [
         profName: 'Janine',
         age: 28,
         bio: 'Likes Taylor Swift and bunnies',
-        pic: 'assets/prof.jpeg',
+        pic: 'assets/Janine.jpg',
         email: 'JayJay@yahoo.com'
     },
 
 ]
-/*let mockdata=[{
-  _id:12324124,author:'alex', text:'sto cazzo', date:1231455,comments:[
-    {author:'alex',text:'some comment'},
-    {author:'alex',text:'some comment2'},
-  ]
-},{
-  _id:12324125,auhtor:'alex', text:'sto cazzo', data:1231455,comments:[
-    {author:'alex',text:'some comment'},
-    {author:'alex',text:'some comment2'},
-  ]
-}]*/
+
+
+const sendMatchMail = (message) => {
+    //the text to be sent
+    //let message = "You have been matched with " + profileStack[profileIndex].profName;
+    //this needs to access a node.js function - we will be getting this from mail.js
+    let data = { message: message }
+    // alert(myData.message)
+    $.ajax({
+        url: "/sendMessage",
+        contentType: 'application/json',
+        data: JSON.stringify(data), 
+        type: 'POST',
+        success: function (result) {
+            console.log(result)
+        }
+    });
+
+    /* $.post("/sendMessage",
+         {
+             text: "Donald Duck",
+             message: "Duckburg"
+         },
+         function (data, status) {
+             alert("Data: " + String(data.message) + "\nStatus: " + status);
+         });*/
+}
+
 
 const createUserProfile = () => {
-
     userProfile.profName = $('#name').val();
     userProfile.age = $('#age').val();
     userProfile.bio = $('#bio').val();
-    userProfile.pic = $('#pic').val();
+    //    userProfile.pic = $('#pic').val(); //I will remove this from form and select one of my own.
     userProfile.email = $('#email').val();
-    //hides the welcome/create profile screen
+
+    //update any web displays with the created information
+    userProfileUpdate();
+
+}
+
+
+const getMatchingFunction = () => {
+    //set our user's profile
+    createUserProfile();
+    //put top profile in stack in the view
+    displayProfile(0);
+    //hide the welcome/create profile screen
     $('#welcome').addClass('hidden');
-    //shows the matching pane
+    //shows the presenting profile pane
     $('#matching').removeClass('hidden');
 }
 
-const nopeButtonFunction = () => {
+const nopeSelectedFunction = () => {
     profileIndex++;
     if (profileIndex < profileStack.length) {
         displayProfile(profileIndex);
@@ -107,12 +135,31 @@ const matchingComplete = () => {
     }
 
 }
-const likeButtonFunction = () => {
+
+//updates modal display with the specified profile
+const modalMatchUpdate = (index) => {
+    let picUrl = profileStack[index].pic;
+    $("#matchPic").attr("src", picUrl);
+    $("#matchNameAge").html(profileStack[index].profName + ", " + profileStack[index].age);
+    $("#matchBio").html(profileStack[index].bio);
+
+}
+
+//updates profile name, age, picture and bio wherever the applicable class is in use
+const userProfileUpdate = () => {
+    $(".userProfPic").attr("src", userProfile.pic);
+    $(".userNameAge").html(userProfile.profName + ", " + userProfile.age);
+    $(".userBio").html(userProfile.bio);
+}
+const likeSelectedFunction = () => {
+    //set the modal to display current profile (it's a match!)
+    modalMatchUpdate(profileIndex);
+    //show the modal that displays the match
+    $('#matchAlert').modal('open');
     //the current profile is added to the matches list
     matchList.push(profileStack[profileIndex]);
-    let alertString = 'you matched with '+ profileStack[profileIndex].profName;
-   alert(alertString);
-   sendMatchMail(alertString);
+    let alertString = 'Congratulations '+userProfile.profName+', you have found a match. ' + profileStack[profileIndex].profName+' will contact you soon!';
+    sendMatchMail(alertString);
     //display modal of matching pair and message about emailing and email.
     profileIndex++;
     if (profileIndex < profileStack.length) {
@@ -126,29 +173,11 @@ const likeButtonFunction = () => {
 const displayProfile = (index) => {
     let picUrl = profileStack[index].pic;
     $("#profPic").attr("src", picUrl);
+    $("#nameAge").html(profileStack[index].profName + ", " + profileStack[index].age);
+    $("#profBio").html(profileStack[index].bio);
 }
-/*
 
-function checkDirection(event) {
-    log.insertAdjacentHTML('afterbegin', `movement: ${event.movementX}, ${event.movementY}<br>`);
-    while (log.childNodes.length > 10) log.lastChild.remove()
-  }  */
 
-//const log = document.getElementById('log');
-// document.addEventListener('mousemove', checkDirection);
-
-//--- from other env file
-
-const testButtonFunction = () => {
-    alert('Thank you for clicking')
-}
-/* 
- const checkDragFunction=()=>{
-   alert('Thank you for dragging')
-
- //  alert(movementX);
- }
- */
 const updateMouseDownX = (event) => {
     downMouseX = event.clientX;
 }
@@ -158,10 +187,12 @@ const updateMouseUpX = (event) => {
     //compare the up coordinate with the down coordinate to see if a legitimate-sized "swipe" has occurred
     let dragMovement = upMouseX - downMouseX;
     if (dragMovement > 10) {
-        alert("You swiped right!");
+        //      alert("You swiped right!");
+        likeSelectedFunction();
     }
     if (dragMovement < -10) {
-        alert("You swiped left.")
+        //        alert("You swiped left.")
+        nopeSelectedFunction();
     }
     //if there has not been a swipe/drag of sufficient size to register, no action is taken
 }
@@ -169,18 +200,48 @@ const updateMouseUpX = (event) => {
 
 
 $(document).ready(function () {
+    //reinitialise form inputs
+    M.updateTextFields();
     console.log('Ready')
-
     //initialisation for using modals
     $('.modal').modal();
 
     //bind the buttons
-    $('#testButton').click(testButtonFunction)
+    // $('#testButton').click(testButtonFunction)
 
 
-    $('#likeButton').click(likeButtonFunction)
-    $('#nopeButton').click(nopeButtonFunction)
-    $('#profileButton').click(createUserProfile)
+    //   $('#likeButton').click(likeButtonFunction)
+    $('#likeButton').click(likeSelectedFunction)
+
+
+    //this needs to access a node.js function - we will be getting this from mail.js
+    // { let myData = { message: message }
+    //  alert(myData.message)
+    /* $.ajax({
+         url: "/sendMessage",
+         /*
+         contentType: 'application/json',
+         //  data: JSON.stringify(data),
+         data: {"message": message},
+         type: 'POST',
+         success: function (result) {
+             console.log(result)
+         } 
+         type: 'POST',  // http method
+         data: { myData: 'This is my data.' },  // data to submit
+         success: function (data, status, xhr) {
+             $('p').append('status: ' + status + ', data: ' + data);
+         },
+         error: function (jqXhr, textStatus, errorMessage) {
+                 $('p').append('Error' + errorMessage);
+         }
+     });  }*/
+
+
+    //====================================
+
+    $('#nopeButton').click(nopeSelectedFunction)
+    $('#profileButton').click(getMatchingFunction)
     // movementX
     // $('#matching').movementX(checkDragFunction)
 
@@ -190,21 +251,6 @@ $(document).ready(function () {
     $("#matching").mousedown(updateMouseDownX)
     $("#matching").mouseup(updateMouseUpX)
 
-    /*
-        $( "#testIt" ).draggable({
-            start: function() {
-          
-            },
-            drag: function() {
-          
-            },
-            stop: function() {
-          alert("Got here")
-            }
-          });
-    */
-
-    //object.addEventListener("drag", myScript); 
 
     //test get call
     $.get('/test?user_name="Fantastic User"', (result) => {

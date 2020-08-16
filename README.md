@@ -1,37 +1,5 @@
-Hello by Alessio:
-This is a new commit
-
-bluemix-hello-node
-================================================================================
-
-A "Hello World" server in node.js sample for Bluemix.
-
-This repo contains a complete sample of a node.js program that you can deploy
-on IBM's [Bluemix](https://bluemix.net/) PaaS, which is based on
-the [Cloud Foundry open source project](http://cloudfoundry.org/).
-
-Before jumping into the code, make sure you have an IBM ID, by
-registering at the
-[IBM ID registration](https://www.ibm.com/account/profile/us?page=reg)
-page.  You will need the IBM ID to login to Bluemix from the command line.
-
-You will also need to install the `cf` command-line tool, available
-here:
-
-* <https://github.com/cloudfoundry/cli/releases>
-
-At the time of this writing, the most recent version is `cf v6.1.1`.
-
-
-
-install the code for the sample program
---------------------------------------------------------------------------------
-
-Click the magical button below to deploy the app.
-
-[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy)
-
-or....
+Profile images care of :
+https://www.pexels.com
 
 From a command/shell terminal
 * `cd` into the parent directory you want to install the project in
@@ -39,18 +7,6 @@ From a command/shell terminal
 * `cd` into that child directory
 * run `npm install` to install dependencies
 
-For example:
-
-    $ cd Projects
-    $ git clone https://github.com/IBM-Bluemix/bluemix-hello-node
-
-        ... git output here ...
-
-    $ cd bluemix-hello-node
-
-    $ npm install
-
-        ... npm output here ...
 
 
 run locally
