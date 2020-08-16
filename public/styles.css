@@ -3,24 +3,53 @@
 }
 
 .title{
-  color: white;
+  color: #2c365c;
 }
 .mainText{
-  color:white;
+  color:#2c365c;
 }
 
 body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  background-color: #B783C3;
+  background-color: #d5e4e0;
 
 }
 
-.page-footer{
-  background-color: #9E65A9;
+.page-footer, .page-header {
+  background-color: #d5e4e0;
 }
 main {
   flex: 1 0 auto;
 }
-    
+ 
+.hidden
+{
+    display: none;
+}
+
+.center
+{
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.card
+{
+  background-color: #c5cadf;
+}
+
+/*
+wll need
+$(function () {
+     $('#<divID>').removeClass('hidden');
+ });
+ to unhide
+
+ to hide:
+ $( "p" ).addClass( "myClass yourClass" );
+
+ $( "p" ).removeClass( "myClass noClass" ).addClass( "yourClass" );
+ */
