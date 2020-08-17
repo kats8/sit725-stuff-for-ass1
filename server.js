@@ -40,7 +40,7 @@ app.get("/post", function (request, response) {
 app.post('/sendMessage', (req, res) => {
   console.log(req.body);
  message = String(req.body.message);
- sendHeartbreakerMail(message, res)
+ //sendHeartbreakerMail(message, res)
 })
 
 const sendHeartbreakerMail = (message) => {

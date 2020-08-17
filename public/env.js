@@ -73,7 +73,7 @@ const sendMatchMail = (message) => {
     $.ajax({
         url: "/sendMessage",
         contentType: 'application/json',
-        data: JSON.stringify(data), 
+        data: JSON.stringify(data),
         type: 'POST',
         success: function (result) {
             console.log(result)
@@ -92,6 +92,7 @@ const sendMatchMail = (message) => {
 
 
 const createUserProfile = () => {
+
     userProfile.profName = $('#name').val();
     userProfile.age = $('#age').val();
     userProfile.bio = $('#bio').val();
@@ -100,7 +101,6 @@ const createUserProfile = () => {
 
     //update any web displays with the created information
     userProfileUpdate();
-
 }
 
 
@@ -127,13 +127,55 @@ const nopeSelectedFunction = () => {
 
 const matchingComplete = () => {
     if (matchList.length > 0) {
-        alert('this is where matches will be listed');
-        //list matches
-    } else {
-        alert('There were no matches');
+        //hide matching pane
+        constructMatchesDisplay();
+        $('#matching').addClass('hidden');
         //display no more matches screen
+        $('#listMatches').removeClass('hidden');
+
+    } else {
+        //hide matching pane
+        $('#matching').addClass('hidden');
+        //display no more matches screen
+        $('#noMatches').removeClass('hidden');
+
+
     }
 
+}
+
+
+const constructMatchesDisplay = () => {
+    let listContents = '';
+    //for each element (profile) in the matchlist, add a row displaying its picture and name to the string
+    matchList.forEach((profile, index) => {
+        listContents += '<div class="row"><div class="matchRow"><img src="'+profile.pic+'" class="miniImg circle" alt=""></div><div class="matchRow">' + profile.profName + ', age</div></div>';
+
+    })
+    //then fill the constructed list with created html
+    $('#constructedList').html(listContents);
+    /*
+ //constructs a list of profile pics and names of successful matches
+ let jComments=$("<div class='matches container'><div>");
+ journal.comments.forEach((comment)=>{
+   let thisComment="<div class='col s12 comment'><i class='material-icons left' style='color:white font-size: larger;'>chat_bubble_outline</i>"+comment.text+" by <b>"+comment.author+"</b></div>"
+   jComments.append(thisComment)
+ })
+ let temp=jComments.html()
+ let jString ="<div class='col s12 journalBox'>\
+   <div class='col s8'>"+journal.author+"</div><div class='col s4'>"+journal.date+"</div>\
+   <div class='col s12 journalText'>"+journal.text+"</div>\
+   <div class='col s12 commentsContainer row'>"+temp+"</div>\
+   <div class='col s12 center'><a id='buttonComment' \
+   onclick=commentPost(this) value="+journal._id+" class='waves-effect waves-light btn modal-trigger' href='#modalComments'>Comment</a><div>\
+ </div>";
+ 
+
+ let jEntry = $(jString)
+ //jEntry.append('Sto cazzo')
+
+ $('#journal').append(jEntry)
+ */
 }
 
 //updates modal display with the specified profile
@@ -158,7 +200,7 @@ const likeSelectedFunction = () => {
     $('#matchAlert').modal('open');
     //the current profile is added to the matches list
     matchList.push(profileStack[profileIndex]);
-    let alertString = 'Congratulations '+userProfile.profName+', you have found a match. ' + profileStack[profileIndex].profName+' will contact you soon!';
+    let alertString = 'Congratulations ' + userProfile.profName + ', you have found a match. ' + profileStack[profileIndex].profName + ' will contact you soon!';
     sendMatchMail(alertString);
     //display modal of matching pair and message about emailing and email.
     profileIndex++;
@@ -166,7 +208,7 @@ const likeSelectedFunction = () => {
         displayProfile(profileIndex);
     }
     else {
-        //display no more matches
+        matchingComplete();
     }
 }
 
@@ -251,12 +293,12 @@ $(document).ready(function () {
     $("#matching").mousedown(updateMouseDownX)
     $("#matching").mouseup(updateMouseUpX)
 
-
-    //test get call
-    $.get('/test?user_name="Fantastic User"', (result) => {
-        console.log(result)
-    })
-
+    /*
+        //test get call
+        $.get('/test?user_name="Fantastic User"', (result) => {
+            console.log(result)
+        })
+    */
 
 })
 

@@ -39,6 +39,8 @@ main {
 .card
 {
   background-color: #c5cadf;
+  padding-top: 5px;
+  padding-bottom: 10px;
 }
 
 .modal {
@@ -49,10 +51,29 @@ main {
   height: 100%; 
   overflow: auto; 
 }
+.modal-footer {
+  clear:both 
+}
 
+/* used for setting size of mini profile pictures */
+.miniImg {
+max-height: 70px;
+width: auto
+}
 
-img {
-  max-width: 250px;
-  height: auto;
+/* used for setting images to "medium" size (restricted width, preserving ratio) */ 
+.medImg {
+  max-width: 200px;
+  max-height: auto;
+  }
+
+  /*keeps match elements on the same line and sets height*/
+  .matchRow {
+      height: 70px;
+      line-height: 70px;
+      display: inline-block;
+      margin-left: 15%; 
+      float: left;  
+      text-align: center;
 }
 
