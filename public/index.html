@@ -23,8 +23,8 @@
             <!--Navbar placeholder (in limited functinoality version, there is nowhere to navigate to)-->
             <div class="nav-wrapper center" style=" background-color: #d5e4e0;">
                 <!-- Centre icon (will change to users profile picture once profile is created and matching has) -->
-                <img src="assets/flame.png" id="centreIcon" alt="" class="circle responsive-img"
-                    style="height: 100%;padding-top: 5px; padding-left: 15px;">
+                <img src="assets/flame.png" id="centreIcon" alt="" class="circle"
+                    style="height: 100%; padding-top: 5px; padding-bottom: 5px;">
 
                 </a>
 
@@ -44,24 +44,29 @@
             </div>
 
             <div class="row center">
-                <td>
-                    <!-- Modal Trigger -->
+
+                <a class="waves-effect waves-light btn" id="newProfileButton">Create a new profile</a>
+
+                <!-- Modal Trigger-->
+                <!--
                     <a class="waves-effect waves-light btn modal-trigger" href="#profileModal">Create a new profile</a>
-                </td>
-                <td>
-                    <!-- Modal Trigger -->
+                    -->
+
+
+                <!--Modal Trigger -->
+                <!--
                     <a class="waves-effect waves-light btn modal-trigger" href="#profileModal1">I already have a
                         profile</a>
-                </td>
+                    -->
             </div>
         </div>
 
-        <div class="modal" id="profileModal">
-            <div class="modal-content center">
+        <div class="container hidden" id="profileEntry">
+            <div class="center">
                 <h4>Create a new profile</h4>
                 <p>Tell us a little about yourself!</p>
-                <form id="modalForm" class=" row">
-                    <div class=" row ">
+                <form id="profileForm" class="row">
+                    <div class="row">
                         <div class="input-field col s12 m9 l10">
                             <input required id="name" type="text" class="validate">
                             <label class="active" for="name">First Name</label>
@@ -74,13 +79,13 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12 m9 l10 ">
-                                <input required value="" id="dob" type="date" class="validate">
+                                <input value="" id="dob" type="date" class="validate">
                                 <label class="active" for="dob">Date of Birth</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12 m9 l10">
-                                <input required value="" id="email" type="email" class="validate">
+                                <input value="" id="email" type="email" class="validate">
                                 <label class="active" for="email">Email</label>
                                 <span class="helper-text" data-error="Please enter a valid email address"
                                     data-success="Great!">Your email for receiving messages</span>
@@ -103,14 +108,11 @@
                             containing your picture</span>
                     </div>
                 </div> -->
-                        <a href="#!" type="submit" class="modal-close waves-effect waves-green btn-flat"
-                            id="profileButton">Start Matching
+                        <a href="#!" type="submit" class="waves-effect waves-green btn-flat" id="profileButton">Start
+                            Matching
                             <i class="material-icons right">send</i></a>
                     </div>
-                    <button data-target="profileModal" type="submit" id="profileButton1">Modal</button>
-                    <div class="modal-footer">
 
-                    </div>
                 </form>
 
             </div>
@@ -124,49 +126,65 @@
                 </p>
             </div>
             <div class="col s12 m8 l3 center card" id="card">
-                <div class="center">
+                <div class="center profileCard">
                     <h4 id="nameAge">Name, age placeholder</h4>
                     <div class="row valign-wrapper">
                         <img src="assets/UserPic.jpg" id="profPic" alt="" draggable="false"
                             class="center responsive-img">
                     </div>
                     <div class="row center">
-                        <p id="profBio">Bio placeholder</p>
+                        <div id="profBio">Bio placeholder</div>
                     </div>
                 </div>
                 <div class="row center">
 
-                    <button id="nopeButton" class="btn-large waves-effect waves-light" type="submit">No thank you
+                    <button id="nopeButton" class="btn-large waves-effect waves-light" type="submit"><i class="large material-icons" style="color:orange; font-size: 40px; vertical-align: middle; margin-right:5px">cancel</i>No thanks
                     </button>
 
-                    <button id="likeButton" class="btn-large waves-effect waves-light" type="submit">I like it!
-                    </button>
+                    <button id="likeButton" class="btn-large waves-effect waves-light" type="submit">Yes please
+                        <i class="material-icons"  style="color:palevioletred; font-size: 40px; vertical-align: middle">favorite</i></button>
                 </div>
             </div>
 
 
         </div>
-        <div id="matchAlert" class="modal wide">
-            <div class="modal-content center card">
+        <div id="matchAlert" class="modal col s12 m8 l6">
+            <div class="center">
+                <h5>You have a match!</h5>
 
-                <p><em>You have a match</em><br>You shall receive an email notifcation shortly</p>
-                <div class="row">
+                <div class="modal-content center col s12 m8 l6">
+                    <div class="row center card">
+                        <div class="inline-block matchCard">
+                            <!--  <div class=" col s6 m4 l3 inline-block"> -->
+                            <div>
+                                <h5 class="userNameAge ">Your name, age</h5>
+                            </div>
+                            <div>
+                                <img src="assets/UserPic.jpg" class="userProfPic medImg" alt="">
+                            </div>
 
-                    <div class="col s6 m4 l3">
-                        <h4 class="userNameAge ">Your name, age</h4>
-                        <img src="assets/UserPic.jpg" class="userProfPic medImg" alt="">
-                        <p class="userBio"> bio</p>
-                    </div>
-                    <div class="col s6 m4 l3 inline-block">
-                        <h4 id="matchNameAge">The name, age</h4>
-                        <img src="assets/UserPic.jpg" id="matchPic" class="medImg" alt="">
-                        <p id="matchBio"> bio</p>
+                            <div class="userBio"> bio</div>
+                        </div>
+                        <div class="inline-block matchCard" >
+
+                            <!-- <div class="col s6 m4 l3 inline-block"> -->
+                            <h5 id="matchNameAge">The name, age</h5>
+                            <img src="assets/UserPic.jpg" id="matchPic" class="medImg" alt="">
+                            <div id="matchBio"> bio</div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="#!" class="modal-close waves-effect waves-green btn-flat center">Keep looking for love
-                    <i class="material-icons col 12 center">send</i></a>
+                <div class="center ">
+                    <p><em>You shall receive an email notification shortly</em></p>
+                </div>
+                <div class="center">
+                    <a href="#!" class="waves-effect waves-green btn modal-close " type="submit" >Keep looking for love
+                        <i class="material-icons" style="vertical-align: middle">send</i></a>
+
+                </div>
+
             </div>
         </div>
         <!-- displays when stack is empty and no matches were found-->
@@ -185,17 +203,15 @@
             </div>
         </div>
         <!--displays when stack is empty and matches were found-->
-        <div id="listMatches" class="container center hidden">
-            <div class="center card">
-                <div class="row">
-                    <h5>That's all for now: congratulations on your matches!</h5>
-                </div>
-                <!-- container for holding/displaying list of successful matches-->
-                <div class="container" id="constructedList">
-                </div>
-                <div>
-                    <p><strong><i>Check back for more suitors soon.</i></strong></p>
-                </div>
+        <div id="listMatches" class="container hidden">
+            <div class="row center">
+                <h5>That's all for now: congratulations on your matches!</h5>
+            </div>
+            <!-- container for holding/displaying list of successful matches-->
+            <div class="container listPane col s10 m5 l3" id="constructedList">
+            </div>
+            <div class=" container center">
+                <p><h6><i>Check back for more suitors soon</i></h6></strong></p>
             </div>
         </div>
     </main>
@@ -203,7 +219,8 @@
         <div class="footer-copyright">
             <div class="container">
                 © 2020 Copyright Kat Steen
-                <a class="right" href="https://github.com/kats8/sit725-ass1">
+                <a class="right" href="https://github.com/kats8/sit725-ass1"><img
+                    src="assets/git-logo.svg" style="height: 20px; padding-right: 10px;"></a>
             </div>
         </div>
     </footer>

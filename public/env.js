@@ -109,8 +109,8 @@ const getMatchingFunction = () => {
     createUserProfile();
     //put top profile in stack in the view
     displayProfile(0);
-    //hide the welcome/create profile screen
-    $('#welcome').addClass('hidden');
+    //hide the profile entry container/pane
+    $('#profileEntry').addClass('hidden');
     //shows the presenting profile pane
     $('#matching').removeClass('hidden');
 }
@@ -154,28 +154,6 @@ const constructMatchesDisplay = () => {
     })
     //then fill the constructed list with created html
     $('#constructedList').html(listContents);
-    /*
- //constructs a list of profile pics and names of successful matches
- let jComments=$("<div class='matches container'><div>");
- journal.comments.forEach((comment)=>{
-   let thisComment="<div class='col s12 comment'><i class='material-icons left' style='color:white font-size: larger;'>chat_bubble_outline</i>"+comment.text+" by <b>"+comment.author+"</b></div>"
-   jComments.append(thisComment)
- })
- let temp=jComments.html()
- let jString ="<div class='col s12 journalBox'>\
-   <div class='col s8'>"+journal.author+"</div><div class='col s4'>"+journal.date+"</div>\
-   <div class='col s12 journalText'>"+journal.text+"</div>\
-   <div class='col s12 commentsContainer row'>"+temp+"</div>\
-   <div class='col s12 center'><a id='buttonComment' \
-   onclick=commentPost(this) value="+journal._id+" class='waves-effect waves-light btn modal-trigger' href='#modalComments'>Comment</a><div>\
- </div>";
- 
-
- let jEntry = $(jString)
- //jEntry.append('Sto cazzo')
-
- $('#journal').append(jEntry)
- */
 }
 
 //updates modal display with the specified profile
@@ -192,6 +170,9 @@ const userProfileUpdate = () => {
     $(".userProfPic").attr("src", userProfile.pic);
     $(".userNameAge").html(userProfile.profName + ", " + userProfile.age);
     $(".userBio").html(userProfile.bio);
+    //also change center icon to reflect current user 
+    $("#centreIcon").attr("src", userProfile.pic);
+
 }
 const likeSelectedFunction = () => {
     //set the modal to display current profile (it's a match!)
@@ -239,7 +220,12 @@ const updateMouseUpX = (event) => {
     //if there has not been a swipe/drag of sufficient size to register, no action is taken
 }
 
-
+const newProfileFunction = () => {
+        //hide the welcome container
+        $('#welcome').addClass('hidden');
+        //shows the profile entry container
+        $('#profileEntry').removeClass('hidden');
+}
 
 $(document).ready(function () {
     //reinitialise form inputs
@@ -251,7 +237,7 @@ $(document).ready(function () {
     //bind the buttons
     // $('#testButton').click(testButtonFunction)
 
-
+$('#newProfileButton').click(newProfileFunction)
     //   $('#likeButton').click(likeButtonFunction)
     $('#likeButton').click(likeSelectedFunction)
 

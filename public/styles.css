@@ -17,6 +17,10 @@ body {
 
 }
 
+.nav {
+  background-color: #d5e4e0;
+
+}
 .page-footer, .page-header {
   background-color: #d5e4e0;
 }
@@ -39,16 +43,22 @@ main {
 .card
 {
   background-color: #c5cadf;
-  padding-top: 5px;
-  padding-bottom: 10px;
+  padding-top: 0px;
+  padding-bottom: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  display: inline-block;
 }
 
 .modal {
-  display: none; 
+ /* display: none; 
   z-index: 1; 
   left: 0;
-  top: 0;
-  height: 100%; 
+  top: 0; */
+  padding-bottom: 0px;
+  min-height:580px;
   overflow: auto; 
 }
 .modal-footer {
@@ -61,10 +71,32 @@ max-height: 70px;
 width: auto
 }
 
+.profileCard {
+  max-width: 300px;
+}
+.matchCard {
+  max-width: 220px;
+  padding: 5px;
+  display: inline-block;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  vertical-align: top;
+}
+
 /* used for setting images to "medium" size (restricted width, preserving ratio) */ 
 .medImg {
   max-width: 200px;
   max-height: auto;
+  }
+
+  .listPane {
+    background-color: white;
+    padding-top: 15px;
+    padding-bottom: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-bottom: 10px;
+    margin-top: 5px;
   }
 
   /*keeps match elements on the same line and sets height*/
@@ -72,8 +104,7 @@ width: auto
       height: 70px;
       line-height: 70px;
       display: inline-block;
+      vertical-align: middle;
       margin-left: 15%; 
-      float: left;  
-      text-align: center;
-}
+    }
 
