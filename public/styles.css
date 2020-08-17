@@ -106,6 +106,9 @@ width: auto
       line-height: 70px;
       display: inline-block;
       vertical-align: middle;
-      margin-left: 15%; 
+      margin-left: 10%; 
     }
 
+    input[type=date] {
+      padding-left:50px;
+    }
