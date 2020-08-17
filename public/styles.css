@@ -17,10 +17,11 @@ body {
 
 }
 
-.nav {
+nav, nav .nav-wrapper i, nav a.sidenav-trigger, nav a.sidenav-trigger i {
   background-color: #d5e4e0;
-
+  max-height: 55px;
 }
+
 .page-footer, .page-header {
   background-color: #d5e4e0;
 }
@@ -93,8 +94,8 @@ width: auto
     background-color: white;
     padding-top: 15px;
     padding-bottom: 5px;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
     margin-bottom: 10px;
     margin-top: 5px;
   }

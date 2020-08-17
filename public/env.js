@@ -93,7 +93,7 @@ const sendMatchMail = (message) => {
 
 const createUserProfile = () => {
 
-    userProfile.profName = $('#name').val();
+    userProfile.profName = $('#firstName').val();
     userProfile.age = $('#age').val();
     userProfile.bio = $('#bio').val();
     //    userProfile.pic = $('#pic').val(); //I will remove this from form and select one of my own.
@@ -105,14 +105,18 @@ const createUserProfile = () => {
 
 
 const getMatchingFunction = () => {
-    //set our user's profile
-    createUserProfile();
-    //put top profile in stack in the view
-    displayProfile(0);
-    //hide the profile entry container/pane
-    $('#profileEntry').addClass('hidden');
-    //shows the presenting profile pane
-    $('#matching').removeClass('hidden');
+    //only proceed if inputs are valid
+    let formValid = (firstName.checkValidity() && dob.checkValidity() && email.checkValidity() && bio.checkValidity())
+    if (formValid) {
+        //set our user's profile
+        createUserProfile();
+        //put top profile in stack in the view
+        displayProfile(0);
+        //hide the profile entry container/pane
+        $('#profileEntry').addClass('hidden');
+        //shows the presenting profile pane
+        $('#matching').removeClass('hidden');
+    }
 }
 
 const nopeSelectedFunction = () => {
@@ -149,7 +153,7 @@ const constructMatchesDisplay = () => {
     let listContents = '';
     //for each element (profile) in the matchlist, add a row displaying its picture and name to the string
     matchList.forEach((profile, index) => {
-        listContents += '<div class="row"><div class="matchRow"><img src="'+profile.pic+'" class="miniImg circle" alt=""></div><div class="matchRow">' + profile.profName + ', age</div></div>';
+        listContents += '<div class="row"><div class="matchRow"><img src="' + profile.pic + '" class="miniImg circle" alt=""></div><div class="matchRow">' + profile.profName + ', age</div></div>';
 
     })
     //then fill the constructed list with created html
@@ -221,12 +225,19 @@ const updateMouseUpX = (event) => {
 }
 
 const newProfileFunction = () => {
-        //hide the welcome container
-        $('#welcome').addClass('hidden');
-        //shows the profile entry container
-        $('#profileEntry').removeClass('hidden');
+    //hide the welcome container
+    $('#welcome').addClass('hidden');
+    //shows the profile entry container
+    $('#profileEntry').removeClass('hidden');
 }
 
+//GET RID OF THISE AFTER ALL TESTING DONE!!!
+const submitFunction = () => {
+    alert('got ere');
+    let formValid = (firstName.checkValidity() && dob.checkValidity() && email.checkValidity() && bio.checkValidity())
+    alert(formValid);
+    //alert(bio.checkValidity());
+}
 $(document).ready(function () {
     //reinitialise form inputs
     M.updateTextFields();
@@ -237,7 +248,7 @@ $(document).ready(function () {
     //bind the buttons
     // $('#testButton').click(testButtonFunction)
 
-$('#newProfileButton').click(newProfileFunction)
+    $('#newProfileButton').click(newProfileFunction)
     //   $('#likeButton').click(likeButtonFunction)
     $('#likeButton').click(likeSelectedFunction)
 
@@ -270,6 +281,9 @@ $('#newProfileButton').click(newProfileFunction)
 
     $('#nopeButton').click(nopeSelectedFunction)
     $('#profileButton').click(getMatchingFunction)
+    //testing validation and form submission
+    $('#profileButton1').click(submitFunction)
+
     // movementX
     // $('#matching').movementX(checkDragFunction)
 

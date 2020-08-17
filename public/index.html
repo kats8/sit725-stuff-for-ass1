@@ -63,71 +63,55 @@
 
         <div class="container hidden" id="profileEntry">
             <div class="center">
-                <h4>Create a new profile</h4>
-                <p>Tell us a little about yourself!</p>
-                <form id="profileForm" class="row">
-                    <div class="row">
-                        <div class="input-field col s12 m9 l10">
-                            <input required id="name" type="text" class="validate">
-                            <label class="active" for="name">First Name</label>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12 m9 l10 ">
-                                <input required value="" id="age" type="number" class="validate">
-                                <label class="active" for="age">Age</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12 m9 l10 ">
-                                <input value="" id="dob" type="date" class="validate">
-                                <label class="active" for="dob">Date of Birth</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12 m9 l10">
-                                <input value="" id="email" type="email" class="validate">
-                                <label class="active" for="email">Email</label>
-                                <span class="helper-text" data-error="Please enter a valid email address"
-                                    data-success="Great!">Your email for receiving messages</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12 m9 l10">
-                                <textarea required value="" id="bio" class="materialize-textarea"></textarea>
-                                <label class="active" for="bio">Bio</label>
-                                <span class="helper-text">In a few words, tell us about your passions, interests,
-                                    hobbies.</span>
-                            </div>
-                        </div>
-                        <!--
-                <div class="row">
-                    <div class="input-field col s12 m9 l10">
-                        <input value="" id="pic" type="url" class="validate">
-                        <label class="active" for="pic">Picture URL</label>
-                        <span class="helper-text" data-error="Please enter a valid URL" data-success="Great!">URL
-                            containing your picture</span>
-                    </div>
-                </div> -->
-                        <a href="#!" type="submit" class="waves-effect waves-green btn-flat" id="profileButton">Start
-                            Matching
-                            <i class="material-icons right">send</i></a>
-                    </div>
-
-                </form>
-
+                <h4>Tell us a little about yourself!</h4>
             </div>
+            <form id="profileForm" class="row listPane  col s12 m10 l8">
+                <div class="center">
+                    <div class="row">
+                        <div class="input-field">
+                            <input required id="firstName" type="text" class="validate">
+                            <label class="active" for="firstName">First Name</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field">
+                            <input id="dob" type="date" class="validate">
+                            <label class="active" for="dob">Date of Birth</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field">
+                            <input value="" id="email" type="email" class="validate">
+                            <label class="active" for="email">Email</label>
+                            <span class="helper-text" data-error="Please enter a valid email address"
+                                data-success="Great!">Your email for receiving messages</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field">
+                            <textarea required value="" id="bio" class="materialize-textarea"></textarea>
+                            <label class="active" for="bio">Bio</label>
+                            <span class="helper-text">In a few words, tell us about your passions, interests,
+                                hobbies.</span>
+                        </div>
+                    </div>
+                
+                    <div>
+                        <button type="submit" class="waves-effect waves-green btn-flat" id="profileButton">Start Matching<i class="material-icons right">send</i></button>
+
+                    </div>
+
+            </form>
+
+        </div>
 
         </div>
         <!-- This is the portion to be displayed when viewing profiles for matching purposes; it begins as hidden-->
         <div class="container hidden center " id="matching">
-            <div id="instructions" style="padding-top:20px">
-                <p> <em>Swipe right on a profile that you like, swipe left if you don't, or use the buttons
-                        provided</em>
-                </p>
-            </div>
-            <div class="col s12 m8 l3 center card" id="card">
+            <div class="col s12 m8 l3 center card" style="margin-top:10px">
                 <div class="center profileCard">
-                    <h4 id="nameAge">Name, age placeholder</h4>
+                    <h5 id="nameAge">Name, age placeholder</h5>
                     <div class="row valign-wrapper">
                         <img src="assets/UserPic.jpg" id="profPic" alt="" draggable="false"
                             class="center responsive-img">
@@ -136,16 +120,24 @@
                         <div id="profBio">Bio placeholder</div>
                     </div>
                 </div>
-                <div class="row center">
+                <div class="row center" style="margin-bottom:0px">
 
-                    <button id="nopeButton" class="btn-large waves-effect waves-light" type="submit"><i class="large material-icons" style="color:orange; font-size: 40px; vertical-align: middle; margin-right:5px">cancel</i>No thanks
+                    <button id="nopeButton" class="btn-large waves-effect waves-light" type="submit"><i
+                            class="large material-icons"
+                            style="color:orange; font-size: 40px; vertical-align: middle; margin-right:5px">cancel</i>No
+                        thanks
                     </button>
 
                     <button id="likeButton" class="btn-large waves-effect waves-light" type="submit">Yes please
-                        <i class="material-icons"  style="color:palevioletred; font-size: 40px; vertical-align: middle">favorite</i></button>
+                        <i class="material-icons"
+                            style="color:palevioletred; font-size: 40px; vertical-align: middle">favorite</i></button>
                 </div>
             </div>
-
+            <div id="instructions" style="padding-top:5px">
+                <p> <em>Swipe right on a profile that you like, swipe left if you don't, or use the buttons
+                        provided</em>
+                </p>
+            </div>
 
         </div>
         <div id="matchAlert" class="modal col s12 m8 l6">
@@ -165,7 +157,7 @@
 
                             <div class="userBio"> bio</div>
                         </div>
-                        <div class="inline-block matchCard" >
+                        <div class="inline-block matchCard">
 
                             <!-- <div class="col s6 m4 l3 inline-block"> -->
                             <h5 id="matchNameAge">The name, age</h5>
@@ -180,7 +172,7 @@
                     <p><em>You shall receive an email notification shortly</em></p>
                 </div>
                 <div class="center">
-                    <a href="#!" class="waves-effect waves-green btn modal-close " type="submit" >Keep looking for love
+                    <a href="#!" class="waves-effect waves-green btn modal-close " type="submit">Keep looking for love
                         <i class="material-icons" style="vertical-align: middle">send</i></a>
 
                 </div>
@@ -211,7 +203,8 @@
             <div class="container listPane col s10 m5 l3" id="constructedList">
             </div>
             <div class=" container center">
-                <p><h6><i>Check back for more suitors soon</i></h6></strong></p>
+                <p>
+                <h6><i>Check back for more suitors soon</i></h6></strong></p>
             </div>
         </div>
     </main>
@@ -219,8 +212,8 @@
         <div class="footer-copyright">
             <div class="container">
                 © 2020 Copyright Kat Steen
-                <a class="right" href="https://github.com/kats8/sit725-ass1"><img
-                    src="assets/git-logo.svg" style="height: 20px; padding-right: 10px;"></a>
+                <a class="right" href="https://github.com/kats8/sit725-ass1"><img src="assets/git-logo.svg"
+                        style="height: 20px; padding-right: 10px;"></a>
             </div>
         </div>
     </footer>
