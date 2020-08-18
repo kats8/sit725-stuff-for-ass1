@@ -142,9 +142,12 @@ const getMatchingFunction = () => {
     //only proceed if form is valid
     let validForm = validateProfileForm();
     if (validForm) {
+        alert('got here');
         //set up suitors screen, then hide the profile entry container/pane (as callback)
         setUpSuitorDisplay(function () { $('#profileEntry').addClass('hidden') });
     }
+    //required to stop "submit" button refreshing the page
+    return false;
 }
 
 const setUpSuitorDisplay = (callback) => {
@@ -155,7 +158,6 @@ const setUpSuitorDisplay = (callback) => {
     //unhide the matching pane display
     $('#matching').removeClass('hidden');
     callback();
-
 }
 
 
