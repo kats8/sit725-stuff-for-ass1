@@ -21,7 +21,7 @@
     <header>
         <nav>
             <!--Navbar placeholder (in limited functinoality version, there is nowhere to navigate to)-->
-            <div class="nav-wrapper center" style=" background-color: #d5e4e0;">
+            <div class="nav-wrapper center" >
                 <!-- Centre icon (will change to users profile picture once profile is created and matching has) -->
                 <img src="assets/flame.png" id="centreIcon" alt="" class="circle"
                     style="height: 100%; padding-top: 5px; padding-bottom: 5px;">
@@ -36,11 +36,14 @@
 
 
         <div class="container center" id="welcome">
-
-            <h1>Welcome to Tinder</h1>
-
-            <div class="row center" style="height: 150px;">
-                <img src="assets/flame.png" alt="" style="height: 100%;padding-top: 5px; padding-left: 15px;">
+            <div class="center col s12 m10 l8">
+                <h1>Welcome to Tinder</h1>
+                <p>Hi there.</p>
+                <p>It looks like you're new to Tinder!</p>
+                <p>Please take a moment to create a profile, and we'll get you breaking hearts in no time.</p>
+            </div>
+            <div class=" row center" style="height: 250px;">
+                <img src="assets/flame.png" alt="" style="height: 100%;padding-top: 5px;">
             </div>
 
             <div class="row center">
@@ -76,37 +79,39 @@
 
                     <div class="row">
                         <div class="input-field">
-                            <input id="dob" type="date" class="validate" required>
-                            <label class="active" value="" for="dob">Date of Birth</label>
+                            <input id="dob" type="text" class="validate datepicker"  required>
+                            <label class="active" for="dob">Date of Birth</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field">
-                            <input  id="email" type="email" class="validate">
-                            <label class="active" for="email">Email</label>
+                            <input id="email" type="email" class="validate" required>
+                            <label class="active" for="email" >Email</label>
                             <span class="helper-text" data-error="Please enter a valid email address"
                                 data-success="Great!">Your email for receiving messages</span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field">
-                            <textarea required value="" id="bio" class="materialize-textarea"></textarea>
+                            <textarea id="bio" class="materialize-textarea"></textarea>
                             <label class="active" for="bio">Bio</label>
                             <span class="helper-text">In a few words, tell us about your passions, interests,
                                 hobbies.</span>
                         </div>
                     </div>
-                
+
                     <div>
-                        <button type="submit" class="waves-effect waves-green btn-flat" id="getMatchingButton">Start Matching<i class="material-icons right">send</i></button>
+                        <button type="submit" class="waves-effect waves-green btn-flat" id="getMatchingButton">Start
+                            Matching<i class="material-icons right">send</i></button>
 
                     </div>
+                </div>
 
             </form>
 
         </div>
 
-        </div>
+        
         <!-- This is the portion to be displayed when viewing profiles for matching purposes; it begins as hidden-->
         <div class="container hidden center " id="matching">
             <div class="col s12 m8 l3 center card" style="margin-top:10px">
@@ -122,13 +127,13 @@
                 </div>
                 <div class="row center" style="margin-bottom:0px">
 
-                    <button id="nopeButton" class="btn-large waves-effect waves-light" type="submit"><i
+                    <button id="nopeButton" class="btn waves-effect waves-light" type="submit"><i
                             class="large material-icons"
-                            style="color:orange; font-size: 40px; vertical-align: middle; margin-right:5px">cancel</i>No
+                            style="color:orange; font-size: 40px; vertical-align: middle; padding-right:5px">cancel</i>No
                         thanks
                     </button>
 
-                    <button id="likeButton" class="btn-large waves-effect waves-light" type="submit">Yes please
+                    <button id="likeButton" class="btn waves-effect waves-light" type="submit">Yes please
                         <i class="material-icons"
                             style="color:palevioletred; font-size: 40px; vertical-align: middle">favorite</i></button>
                 </div>
@@ -149,13 +154,13 @@
                         <div class="inline-block matchCard">
                             <!--  <div class=" col s6 m4 l3 inline-block"> -->
                             <div>
-                                <h5 class="userNameAge ">Your name, age</h5>
+                                <h5 id="userNameAge ">Your name, age</h5>
                             </div>
                             <div>
-                                <img src="assets/UserPic.jpg" class="userProfPic medImg" alt="">
+                                <img src="assets/UserPic.jpg" id="userProfPic" class=" medImg" alt="">
                             </div>
 
-                            <div class="userBio"> bio</div>
+                            <div id="userBio"> bio</div>
                         </div>
                         <div class="inline-block matchCard">
 
@@ -168,8 +173,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <div class="center ">
-                    <p><em>You shall receive an email notification shortly</em></p>
+                <div class="center " style="padding-bottom:15px">
+                    <em>You shall receive an email notification shortly</em>
                 </div>
                 <div class="center">
                     <a href="#!" class="waves-effect waves-green btn modal-close " type="submit">Keep looking for love
@@ -184,8 +189,8 @@
             <div class="center col s12 m9 l6">
                 <h4>Sorry, there are no more matches now</h4>
             </div>
-            <div class="row center" style="height: 150px;">
-                <img src="assets/sadface.png" alt="" style="height: 100%;padding: 5px; ">
+            <div class="row center" style="height: 170px;">
+                <img src="assets/sadface.png" alt="" style="height: 100%;padding: 20px; ">
             </div>
             <div>
                 <p><em>Check back for more suitors soon.</em></p>
@@ -195,7 +200,7 @@
             </div>
         </div>
         <!--displays when stack is empty and matches were found-->
-        <div id="listMatches" class="container hidden">
+        <div id="listMatches" class="container hidden" style="padding-left:50px; padding-right:50px">
             <div class="row center">
                 <h5>That's all for now: congratulations on your matches!</h5>
             </div>
@@ -203,8 +208,7 @@
             <div class="container listPane col s8 m4 l3" id="constructedList">
             </div>
             <div class=" container center">
-                <p>
-                <h6><i>Check back for more suitors soon</i></h6></strong></p>
+                <h6><i>Check back for more suitors soon</i></h6></strong>
             </div>
         </div>
     </main>

@@ -1,16 +1,10 @@
-
-
-//DO I ADD userprofile to profiles and then skip if it's me??
-//remove all the stuff that's not mine
-
-
-//the current user, initialised to null
-//index to keep track of profile in a stack
+//index of currently presented profile in the suitor stack
 let profileIndex = 0;
+//array to contain list of matched profiles
 let matchList = [];
-//tracks age of user (profile will not be created/updated if user under age)
+//variable for handling age of current user (current user's profile will not be created/updated if user is underage)
 let userAge = "";
-//current user, initialised to no information and locally stored photograph
+//current user, initialised to no info with locally stored photograph
 let userProfile = {
     profName: '',
     age: null,
@@ -20,7 +14,7 @@ let userProfile = {
     dob: ''
 }
 
-//tracks X coordinants for mouse on down and up to detect drag/swipe
+//X coordinates for last mouse "down" and "up" event for detecting drag/swipe over profile
 let downMouseX = null;
 let upMouseX = null;
 
@@ -65,16 +59,14 @@ let profileStack = [
         pic: 'assets/Janine.jpg',
         email: 'JayJay@yahoo.com'
     },
-
 ]
 
 //sends request to server to send the user an email 
 const sendMatchMail = (message) => {
-    //the text to be sent
-    //let message = "You have been matched with " + profileStack[profileIndex].profName;
-    //this needs to access a node.js function - we will be getting this from mail.js
-    let data = { message: message }
-    // alert(myData.message)
+    let data = {
+        message: message,
+        toAddress: userProfile.email
+    }    // ajax sends a request to the server providing message content for the email
     $.ajax({
         url: "/sendMessage",
         contentType: 'application/json',
@@ -84,21 +76,12 @@ const sendMatchMail = (message) => {
             console.log(result)
         }
     });
-
-    /* $.post("/sendMessage",
-         {
-             text: "Donald Duck",
-             message: "Duckburg"
-         },
-         function (data, status) {
-             alert("Data: " + String(data.message) + "\nStatus: " + status);
-         });*/
 }
 
-
-const calculateAge = (testDob) => {
+//takes a date of birth and returns the age
+function calculateAge(dateOfBirth) {
     let now = new Date();
-    let dob = new Date(testDob);
+    let dob = new Date(dateOfBirth);
     //calculate age with assumption bithday for the year has occurred
     let age = (now.getFullYear() - dob.getFullYear());
     //if the birthmonth is yet to occur, take a year off age
@@ -114,70 +97,89 @@ const calculateAge = (testDob) => {
     return age;
 }
 
+//takes profile form inputs and stores in local user profile data
 const createUserProfile = () => {
     userProfile.profName = $('#firstName').val();
     userProfile.bio = $('#bio').val();
-    //    userProfile.pic = $('#pic').val(); //I will remove this from form and select one of my own.
     userProfile.email = $('#email').val();
     userProfile.dob = $('#dob').val();
     //for ease of use, store calculated age
-    userProfile.age = userAge;
-    //update any web displays with the created information
+    userProfile.age = calculateAge($('#dob').val());
+    //  alert(userProfile.bio);
+    //update any web displays with the new information
     userProfileUpdate();
 }
 
-const validateForm = () => {
+
+//checks whether profileForm inputs are valid and age >= 18, returns boolean
+function validateProfileForm() {
     let oldEnough = false;
+    let formValid = false;
+    userAge = calculateAge($('#dob').val());
+
     //if form date input is valid, check age
     if (dob.checkValidity()) {
-        let formAge = calculateAge($('#dob').val());
+        userAge = calculateAge($('#dob').val());
         //if under 18, alert user
-        if (formAge > 17) {
+        if (userAge > 17) {
             oldEnough = true;
-        } else {
-            alert('You must be 18 years or older to use this service');
+        } else { //alert and send back to home screen
+            alert('Sorry. You must be 18 years or older to use this service');
+            $('#welcome').removeClass('hidden');
+            $('#profileEntry').addClass('hidden')
         }
     }
-    //only proceed if inputs are valid
-    let formValid = (oldEnough && firstName.checkValidity() && email.checkValidity() && bio.checkValidity())
-    if (formValid) {
+    //if old enough and all required inputs are valid, form is valid
+    if (oldEnough && firstName.checkValidity() && email.checkValidity()) {
+        //  return formValid;
         return true;
     }
 }
-//if form inputs are valid, presents first match
-const getMatchingFunction = () => {
-    //only if form is valid, close form and display matches
-    if (validateForm()) {
-        //put top profile in stack in the view
-        displayProfile(0);
-        //set our user's profile
-        createUserProfile();
-        //put top profile in stack in the view
-        // displayProfile(0);
-        //shows the presenting profile pane
-        $('#matching').removeClass('hidden');
-        //hide the profile entry container/pane
-        $('#profileEntry').addClass('hidden');
 
+
+//stores user data in local profile and sets display for reviewing suitors
+const getMatchingFunction = () => {
+    //only proceed if form is valid
+    let validForm = validateProfileForm();
+    if (validForm) {
+        //set up suitors screen, then hide the profile entry container/pane (as callback)
+        setUpSuitorDisplay(function () { $('#profileEntry').addClass('hidden') });
     }
 }
 
+const setUpSuitorDisplay = (callback) => {
+    //store our new user's profile data
+    createUserProfile();
+    //display first profile in stack in "matching" pane
+    displayProfile(0);
+    //unhide the matching pane display
+    $('#matching').removeClass('hidden');
+    callback();
+
+}
+
+
+//(on profile rejection) shows next profile or goes to "matchingComplete" function if none remain
 const nopeSelectedFunction = () => {
     profileIndex++;
+    //while still profiles left in the stack, display the next profile
     if (profileIndex < profileStack.length) {
         displayProfile(profileIndex);
     }
+    //if stack is empty, go to matching is complete 
     else {
         matchingComplete();
     }
 }
 
+//displays when stack is empty (all profiles have been presented and judged)
 const matchingComplete = () => {
+    //if there were matches, list them
     if (matchList.length > 0) {
-        //hide matching pane
+        //calls function to construct match list in 'listMatches' container/pane
         constructMatchesDisplay();
+        //hide the 'matching' display container and show the 'listMatches' display instead.
         $('#matching').addClass('hidden');
-        //display no more matches screen
         $('#listMatches').removeClass('hidden');
 
     } else {
@@ -185,42 +187,38 @@ const matchingComplete = () => {
         $('#matching').addClass('hidden');
         //display no more matches screen
         $('#noMatches').removeClass('hidden');
-
-
     }
-
 }
 
-
+//uses elements of matchList array to build a html picture/name list of profiles for the match list pane.
 const constructMatchesDisplay = () => {
     let listContents = '';
     //for each element (profile) in the matchlist, add a row displaying its picture and name to the string
     matchList.forEach((profile, index) => {
-        listContents += '<div class="row"><div class="matchRow"><img src="' + profile.pic + '" class="miniImg circle" alt=""></div><div class="matchRow"><h5>' + profile.profName + '</h5></div></div>';
-
+        listContents += '<div class="row"><div class="matchRow"><img src="' + profile.pic + '" class="miniImg circle" alt=""></div><div class="matchRow">' + profile.profName + '</div></div>';
     })
     //then fill the constructed list with created html
     $('#constructedList').html(listContents);
 }
 
-//updates modal display with the specified profile
+//updates modal match display with the index profile details
 const modalMatchUpdate = (index) => {
     let picUrl = profileStack[index].pic;
     $("#matchPic").attr("src", picUrl);
     $("#matchNameAge").html(profileStack[index].profName + ", " + profileStack[index].age);
     $("#matchBio").html(profileStack[index].bio);
-
 }
 
-//updates profile name, age, picture and bio wherever the applicable class is in use
+//updates profile name, age, picture and bio wherever the applicable class is in use 
 const userProfileUpdate = () => {
-    $(".userProfPic").attr("src", userProfile.pic);
-    $(".userNameAge").html(userProfile.profName + ", " + userProfile.age);
-    $(".userBio").html(userProfile.bio);
-    //also change center icon to reflect current user 
+    $("#userProfPic").attr("src", userProfile.pic);
+    $("#userNameAge").html(userProfile.profName + ", " + userProfile.age);
+    $("#userBio").html(userProfile.bio);
+    //also change center icon to reflect current user pic
     $("#centreIcon").attr("src", userProfile.pic);
-
 }
+
+//(on profile liking) displays match pane, adds to match list & triggers email before proceeding to next profile (or "matching complete" if no more)
 const likeSelectedFunction = () => {
     //set the modal to display current profile (it's a match!)
     modalMatchUpdate(profileIndex);
@@ -228,10 +226,11 @@ const likeSelectedFunction = () => {
     $('#matchAlert').modal('open');
     //the current profile is added to the matches list
     matchList.push(profileStack[profileIndex]);
-    let alertString = 'Congratulations ' + userProfile.profName + ', you have found a match. ' + profileStack[profileIndex].profName + ' will contact you soon!';
-    sendMatchMail(alertString);
-    //display modal of matching pair and message about emailing and email.
+    //construct match message and give it to 
+    let msgString = `Congratulations ${userProfile.profName}, you have found a match. ${profileStack[profileIndex].profName} will contact you soon!`;
+    sendMatchMail(msgString);
     profileIndex++;
+    //display the next profile, or go to matching complete pane if no more in the stack.
     if (profileIndex < profileStack.length) {
         displayProfile(profileIndex);
     }
@@ -240,6 +239,7 @@ const likeSelectedFunction = () => {
     }
 }
 
+//displays the selected profile in the matching pane
 const displayProfile = (index) => {
     let picUrl = profileStack[index].pic;
     $("#profPic").attr("src", picUrl);
@@ -247,26 +247,29 @@ const displayProfile = (index) => {
     $("#profBio").html(profileStack[index].bio);
 }
 
-
+//stores X coordinate of mouse button down event
 const updateMouseDownX = (event) => {
     downMouseX = event.clientX;
 }
 
+//on "mouse button up" event need to compare to last mouse-down to detect swipe direction 
 const updateMouseUpX = (event) => {
     upMouseX = event.clientX;
     //compare the up coordinate with the down coordinate to see if a legitimate-sized "swipe" has occurred
     let dragMovement = upMouseX - downMouseX;
+    //if X difference is positive by more than 10, user has swiped right - run "like selected" function
     if (dragMovement > 10) {
-        //      alert("You swiped right!");
         likeSelectedFunction();
     }
+    //if X difference is negative by more than 10, user has swiped left - run "nope selected" function
     if (dragMovement < -10) {
-        //        alert("You swiped left.")
+        //user has swiped left - 
         nopeSelectedFunction();
     }
-    //if there has not been a swipe/drag of sufficient size to register, no action is taken
+    // (if there has not been a swipe/drag of sufficient size to register, no action is taken)
 }
 
+//hide welcome screen, show profile entry form
 const newProfileFunction = () => {
     //hide the welcome container
     $('#welcome').addClass('hidden');
@@ -274,65 +277,21 @@ const newProfileFunction = () => {
     $('#profileEntry').removeClass('hidden');
 }
 
-
 $(document).ready(function () {
     //reinitialise form inputs
     M.updateTextFields();
-    console.log('Ready')
+    //initialize date picker, reset default date to today
+    let now = new Date();
+    $('.datepicker').datepicker({ yearRange: 120, defaultDate: now });
+    console.log('Ready');
     //initialisation for using modals
     $('.modal').modal();
-
     //bind the buttons
-    // $('#testButton').click(testButtonFunction)
-
     $('#newProfileButton').click(newProfileFunction)
-    //   $('#likeButton').click(likeButtonFunction)
     $('#likeButton').click(likeSelectedFunction)
-
-
-    //this needs to access a node.js function - we will be getting this from mail.js
-    // { let myData = { message: message }
-    //  alert(myData.message)
-    /* $.ajax({
-         url: "/sendMessage",
-         /*
-         contentType: 'application/json',
-         //  data: JSON.stringify(data),
-         data: {"message": message},
-         type: 'POST',
-         success: function (result) {
-             console.log(result)
-         } 
-         type: 'POST',  // http method
-         data: { myData: 'This is my data.' },  // data to submit
-         success: function (data, status, xhr) {
-             $('p').append('status: ' + status + ', data: ' + data);
-         },
-         error: function (jqXhr, textStatus, errorMessage) {
-                 $('p').append('Error' + errorMessage);
-         }
-     });  }*/
-
-
-    //====================================
-
     $('#nopeButton').click(nopeSelectedFunction)
     $('#getMatchingButton').click(getMatchingFunction)
-
-    // movementX
-    // $('#matching').movementX(checkDragFunction)
-
-    // $('#matching').drag(checkDragFunction);
-    //object.addEventListener("drag", checkDragFunction);
-
+    //detect mouse up/down events occurring over the matching pane (to detect left/right swipes)
     $("#matching").mousedown(updateMouseDownX)
     $("#matching").mouseup(updateMouseUpX)
-
-    /*
-        //test get call
-        $.get('/test?user_name="Fantastic User"', (result) => {
-            console.log(result)
-        })
-    */
-
 })

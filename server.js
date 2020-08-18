@@ -18,7 +18,7 @@ var transporter = nodemailer.createTransport({
 
 var mailOptions = {
   from: 'SIT725.heartbreakers@gmail.com',
-  to: 'SIT725.heartbreakers@gmail.com',
+  to: '',
   subject: 'You have a new match!',
   text: ''
 };
@@ -26,25 +26,19 @@ var mailOptions = {
 
 app.use(express.static(__dirname + '/public'));
 
-//GET RID OF THIS LATER
-app.get("/test", function (request, response) {
-  var user_name = request.query.user_name;
-  response.end("Hello " + user_name + "!");
-});
-
-app.get("/post", function (request, response) {
-  var user_name = request.query.user_name;
-  response.end("Hello " + user_name + "!");
-});
 
 app.post('/sendMessage', (req, res) => {
   console.log(req.body);
  message = String(req.body.message);
- //sendHeartbreakerMail(message, res)
+ to = String(req.body.toAddress)
+ sendHeartbreakerMail(message, to)
+ res.send({result:200});
 })
 
-const sendHeartbreakerMail = (message) => {
+const sendHeartbreakerMail = (message, to) => {
   mailOptions.text = message;
+  mailOptions.to = to;
+
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
       console.log(error);
